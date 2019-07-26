@@ -1,4 +1,4 @@
-class firstTown {
+class FirstTown {
   constructor(options, pawnOptions){
     this.options = options;
     this.pawnOptions = pawnOptions;
@@ -9,6 +9,7 @@ class firstTown {
     this.tileDomObject = null;
     this.row = null;
     this.col = null;
+    this.makeGameBoard = this.makeGameBoard.bind(this)
   }
   makeGameBoard() {
     for (this.row = 0; this.row < this.options.height; this.row++) {
@@ -25,12 +26,11 @@ class firstTown {
         this.makePawnSquares();
       }
     }
-    // for (var i = 5; i < 25; i+=3){
-
-    //   for (var j = 0; j<2; j++){
-    //     $(".square:nth-child(" + (i+j) + ") .squareContainer").addClass("backOfTile");
-    //   }
-    // }
+    for (var i = 7; i < 20; i+=10){
+      for (var j = 0; j<4; j+=2){
+        $(".square:nth-child(" + (i+j) + ") .squareContainer").addClass("backOfTile");
+      }
+    }
 
   }
   makePawnSquares() {

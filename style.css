@@ -44,11 +44,10 @@ body{
   height:100%;
   border: 1px solid green;
   background-color:violet;
-  opacity: .4;
+  opacity: 1;
   position:static;
 }
 .pawn{
-  display: inline-flex;
   float: left;
   width:20%;
   height:20.0%;
@@ -57,4 +56,12 @@ body{
 
 .pawn:nth-of-type(2){
   background-color: red;
+}
+
+.player{
+  background-color: blue;
+  width: 80%;
+  height:80%;
+  z-index: 5;
+  margin:5%;
 }

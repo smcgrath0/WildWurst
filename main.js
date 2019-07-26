@@ -9,7 +9,6 @@ $(document).ready(initializeApp);
 //   width: 4
 // }
 function initializeApp(){
-  var game = new firstTown({height: 5,width:5},{height:5,width:5});
-  console.log(game);
-  game.makeGameBoard();
+
+  var gameMaster = new GameMaster();
 }
