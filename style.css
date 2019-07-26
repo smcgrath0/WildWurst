@@ -3,8 +3,11 @@ body{
   height: 100vh;
   width: 100vw;
   display: block;
-  position: fixed;
+  /* position: fixed; */
+  /* overflow-x: scroll; */
+  overflow: hidden;
 }
+/*GAME STYLEING*/
 .backOfTile{
   background-color: yellow;
 }
@@ -17,10 +20,14 @@ body{
 #gameBoard{
 
   margin:auto;
-  margin-top: 5vh;
+  margin-top: 5.5vh;
+  margin-left:10vw;
   width: 90vh;
   height: 90vh;
   background-color: lightblue;
+
+  position: absolute;
+
 }
 .square{
   width: 20%;
@@ -58,10 +65,36 @@ body{
   background-color: red;
 }
 
+
+
+/*PLAYER STYLING*/
 .player{
   background-color: blue;
   width: 80%;
   height:80%;
   z-index: 5;
   margin:5%;
+}
+
+/* .hidden{
+  /* display: none; */
+} */
+
+
+
+/* BUILDING STYLING */
+#buildingContainer{
+  height: 50vmin;
+  width: 50vmin;
+  background-color:rgba(100,100,100,0.5);
+  position: absolute;
+}
+
+.home{
+  top:10%;
+  left:10%;
+  height: 80%;
+  width:80%;
+  background-color: red;
+  position: relative;
 }

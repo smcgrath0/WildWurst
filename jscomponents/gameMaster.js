@@ -5,7 +5,7 @@ class GameMaster {
     // this.game.boardArray
     console.log(this.game);
     this.game.makeGameBoard();
-
+    this.homeDisplay = new HomeDisplay(this.game.boardArray, this.currentPlayerPosition)
     //player Position
     this.largeSquareX = 0;
     this.largeSquareY = 0;
@@ -17,35 +17,64 @@ class GameMaster {
       smallX: this.smallSquareX,
       smallY: this.smallSquareY,
     }
+    //screen movement with player movement
+    this.xScreenCounter = 0;
+    this.yScreenCounter = 0;
+
+    //home
+
+
     this.player = new Player(this.game.boardArray, this.currentPlayerPosition);
     this.movementAll = this.movementAll.bind(this);
     window.addEventListener('keydown', this.movementAll);
+    // .addEventListener()
+    // document.addEventListener('scroll', this.consoleScroll);
     // this.movementDown = this.movementDown.bind(this);
     this.movementUp = this.movementUp.bind(this);
+    this.consoleScroll = this.consoleScroll.bind(this);
     // this.movementLeft = this.movementLeft.bind(this);
     // this.movementRight = this.movementRight.bind(this);
     this.accessCurrentPosition = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX][this.currentPlayerPosition.smallY][this.currentPlayerPosition.smallX].domElement.contents
     $(this.accessCurrentPosition).append(this.player.currentPlayer);
   }
+  consoleScroll(event){
+    console.log(event)
+  }
   movementAll(event) {
-    // if (this.winTheGame === false) {
+    // if (this.winTheGame === false) {]
+    console.log(event)
+
+      event.preventDefault();
       switch (event.keyCode) {
         case 37:
           this.movementLeft();
           $(this.accessCurrentPosition).append(this.player.currentPlayer);
+          this.xScreenCounter += 25;
+          $("#gameBoard").css("left", this.xScreenCounter + "px")
+          // console.log(xScreenCounter, yScreenCounter);
+
           break;
         case 38:
-          // $(this.accessCurrentPosition).remove(this.player.currentPlayer);
           this.movementUp();
           $(this.accessCurrentPosition).append(this.player.currentPlayer);
+          this.yScreenCounter += 25;
+          console.log(this.xScreenCounter, this.yScreenCounter);
+          $("#gameBoard").css("top",this.yScreenCounter+"px")
           break;
         case 39:
           this.movementRight();
           $(this.accessCurrentPosition).append(this.player.currentPlayer);
+          this.xScreenCounter -= 25;
+          console.log(this.xScreenCounter,this.yScreenCounter);
+          $("#gameBoard").css("left", this.xScreenCounter + "px");
           break;
         case 40:
           this.movementDown();
           $(this.accessCurrentPosition).append(this.player.currentPlayer);
+          // if (this.currentPlayerPosition)
+          this.yScreenCounter -= 25;
+          // console.log(xScreenCounter, yScreenCounter);
+          $("#gameBoard").css("top", this.yScreenCounter + "px");
           break;
       }
     // }
@@ -58,6 +87,7 @@ class GameMaster {
       if (this.currentPlayerPosition.largeY < 0) {
         this.currentPlayerPosition.largeY = 0;
         ++this.currentPlayerPosition.smallY;
+        this.yScreenCounter += 25;
         return this.currentPlayerPosition.largeY;
       }
     }
@@ -111,6 +141,7 @@ class GameMaster {
       if (this.currentPlayerPosition.largeY >= 5) {
         this.currentPlayerPosition.largeY = 4;
         --this.currentPlayerPosition.smallY;
+        this.yScreenCounter -= 25;
         return this.currentPlayerPosition.largeY;
       }
     }
@@ -163,7 +194,8 @@ class GameMaster {
       this.currentPlayerPosition.smallX = 4;
       if (this.currentPlayerPosition.largeX < 0) {
         this.currentPlayerPosition.largeX = 0;
-        ++this.currentPlayerPosition.smallX;
+        this.currentPlayerPosition.smallX = 0;
+        this.xScreenCounter -= 25;
         return this.currentPlayerPosition.largeX;
       }
     }
@@ -217,6 +249,7 @@ class GameMaster {
       if (this.currentPlayerPosition.largeX >= 5) {
         this.currentPlayerPosition.largeX = 4;
         --this.currentPlayerPosition.smallX;
+        this.xScreenCounter += 25;
         return this.currentPlayerPosition.largeX;
       }
     }
@@ -254,5 +287,11 @@ class GameMaster {
 
   //   }
     return this.currentPlayerPosition;
+  }
+  checkIfPlayerEntersHouse() {
+    if (this.currentPlayerPosition.largeX === 1 && this.currentPlayerPosition.largeY === 1) {
+      $("#gameBoard").addClass("hidden");
+      $("#displayContainer").append(this.homeDisplay);
+    }
   }
 }
