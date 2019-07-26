@@ -5,7 +5,7 @@ class GameMaster {
     // this.game.boardArray
     console.log(this.game);
     this.game.makeGameBoard();
-    this.homeDisplay = new HomeDisplay(this.game.boardArray, this.currentPlayerPosition)
+
     //player Position
     this.largeSquareX = 0;
     this.largeSquareY = 0;
@@ -22,8 +22,12 @@ class GameMaster {
     this.yScreenCounter = 0;
 
     //home
+    this.homeDisplay = new HomeDisplay(this.game.boardArray, this.currentPlayerPosition);
+    if (this.currentPlayerPosition.largeX === 1 && this.currentPlayerPosition.largeY === 1){
+      // $("#gameContainer").addClass("hidden");
+      $("#buildingContainer").removeClass("hidden");
 
-
+    }
     this.player = new Player(this.game.boardArray, this.currentPlayerPosition);
     this.movementAll = this.movementAll.bind(this);
     window.addEventListener('keydown', this.movementAll);
@@ -59,7 +63,7 @@ class GameMaster {
           $(this.accessCurrentPosition).append(this.player.currentPlayer);
           this.yScreenCounter += 25;
           console.log(this.xScreenCounter, this.yScreenCounter);
-          $("#gameBoard").css("top",this.yScreenCounter+"px")
+          $("#gameBoard").css("top",this.yScreenCounter + "px")
           break;
         case 39:
           this.movementRight();
@@ -71,7 +75,6 @@ class GameMaster {
         case 40:
           this.movementDown();
           $(this.accessCurrentPosition).append(this.player.currentPlayer);
-          // if (this.currentPlayerPosition)
           this.yScreenCounter -= 25;
           // console.log(xScreenCounter, yScreenCounter);
           $("#gameBoard").css("top", this.yScreenCounter + "px");
