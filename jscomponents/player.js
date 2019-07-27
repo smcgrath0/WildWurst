@@ -9,7 +9,12 @@ class Player {
     this.smallY = this.currentPosition.smallY;
     console.log(this.bigX)
     this.currentPlayer = $("<div>").addClass("player");
+    this.currentImage = this.currentPlayer.css("background-image");
     // $(this.boardArray[this.bigY][this.bigX][this.smallY][this.smallX].domElement.contents).append(this.currentPlayer);
+  }
+
+  updatePlayerVisuals(){
+    this.current
   }
 
 }

@@ -41,6 +41,7 @@ class GameMaster {
     console.log(event)
   }
   movementAll(event) {
+    debugger;
     // if (this.winTheGame === false) {]
     console.log(event)
 
@@ -52,7 +53,7 @@ class GameMaster {
           this.xScreenCounter += 25;
           $("#gameBoard").css("left", this.xScreenCounter + "px")
           // console.log(xScreenCounter, yScreenCounter);
-
+          $(".player").css("background-image", "url('./assets/images/playerImages/NormanWurst-sideL.png')");
           break;
         case 38:
           this.movementUp();
@@ -60,6 +61,7 @@ class GameMaster {
           this.yScreenCounter += 25;
           console.log(this.xScreenCounter, this.yScreenCounter);
           $("#gameBoard").css("top",this.yScreenCounter+"px")
+          $(".player").css("background-image", "url('./assets/images/playerImages/NormanWurst-back.png')");
           break;
         case 39:
           this.movementRight();
@@ -67,6 +69,7 @@ class GameMaster {
           this.xScreenCounter -= 25;
           console.log(this.xScreenCounter,this.yScreenCounter);
           $("#gameBoard").css("left", this.xScreenCounter + "px");
+          $(".player").css("background-image", "url('./assets/images/playerImages/NormanWurst-sideR.png')");
           break;
         case 40:
           this.movementDown();
@@ -75,6 +78,7 @@ class GameMaster {
           this.yScreenCounter -= 25;
           // console.log(xScreenCounter, yScreenCounter);
           $("#gameBoard").css("top", this.yScreenCounter + "px");
+          $(".player").css("background-image", "url('./assets/images/playerImages/NormanWurst-front.png')");
           break;
       }
     // }
