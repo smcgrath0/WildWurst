@@ -5,7 +5,7 @@ class GameMaster {
     // this.game.boardArray
     console.log(this.game);
     this.game.makeGameBoard();
-    this.homeDisplay = new HomeDisplay(this.game.boardArray, this.currentPlayerPosition)
+
     //player Position
     this.largeSquareX = 0;
     this.largeSquareY = 0;
@@ -22,7 +22,7 @@ class GameMaster {
     this.yScreenCounter = 0;
 
     //home
-
+    this.homeDisplay = new HomeDisplay(this.game.boardArray, this.currentPlayerPosition);
 
     this.player = new Player(this.game.boardArray, this.currentPlayerPosition);
     this.movementAll = this.movementAll.bind(this);
@@ -34,8 +34,8 @@ class GameMaster {
     this.consoleScroll = this.consoleScroll.bind(this);
     // this.movementLeft = this.movementLeft.bind(this);
     // this.movementRight = this.movementRight.bind(this);
-    this.accessCurrentPosition = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX][this.currentPlayerPosition.smallY][this.currentPlayerPosition.smallX].domElement.contents
-    $(this.accessCurrentPosition).append(this.player.currentPlayer);
+    this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX][this.currentPlayerPosition.smallY][this.currentPlayerPosition.smallX].domElement.contents
+    $(this.accessCurrentContent).append(this.player.currentPlayer);
   }
   consoleScroll(event){
     console.log(event)
@@ -49,7 +49,7 @@ class GameMaster {
       switch (event.keyCode) {
         case 37:
           this.movementLeft();
-          $(this.accessCurrentPosition).append(this.player.currentPlayer);
+          $(this.accessCurrentContent).append(this.player.currentPlayer);
           this.xScreenCounter += 25;
           $("#gameBoard").css("left", this.xScreenCounter + "px")
           // console.log(xScreenCounter, yScreenCounter);
@@ -57,15 +57,16 @@ class GameMaster {
           break;
         case 38:
           this.movementUp();
-          $(this.accessCurrentPosition).append(this.player.currentPlayer);
+          $(this.accessCurrentContent).append(this.player.currentPlayer);
           this.yScreenCounter += 25;
           console.log(this.xScreenCounter, this.yScreenCounter);
+
           $("#gameBoard").css("top",this.yScreenCounter+"px")
           $(".player").css("background-image", "url('./assets/images/playerImages/NormanWurst-back.png')");
           break;
         case 39:
           this.movementRight();
-          $(this.accessCurrentPosition).append(this.player.currentPlayer);
+          $(this.accessCurrentContent).append(this.player.currentPlayer);
           this.xScreenCounter -= 25;
           console.log(this.xScreenCounter,this.yScreenCounter);
           $("#gameBoard").css("left", this.xScreenCounter + "px");
@@ -73,14 +74,18 @@ class GameMaster {
           break;
         case 40:
           this.movementDown();
-          $(this.accessCurrentPosition).append(this.player.currentPlayer);
-          // if (this.currentPlayerPosition)
+          $(this.accessCurrentContent).append(this.player.currentPlayer);
           this.yScreenCounter -= 25;
           // console.log(xScreenCounter, yScreenCounter);
           $("#gameBoard").css("top", this.yScreenCounter + "px");
           $(".player").css("background-image", "url('./assets/images/playerImages/NormanWurst-front.png')");
           break;
       }
+    // this.checkIfPlayerEntersHouse();
+    if (this.currentPlayerPosition.largeX === 1 && this.currentPlayerPosition.largeY === 1) {
+      $("#gameContainer").addClass("hidden");
+      $("#buildingContainer").removeClass("hidden");
+    }
     // }
   }
   movementUp() {
@@ -114,7 +119,7 @@ class GameMaster {
     // } else if (this.upandDownIndex <= -1 && this.leftandRightIndex != 2) {
     //   this.upandDownIndex++
     // } else {
-    this.accessCurrentPosition = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX][this.currentPlayerPosition.smallY][this.currentPlayerPosition.smallX].domElement.contents
+    this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX][this.currentPlayerPosition.smallY][this.currentPlayerPosition.smallX].domElement.contents
     //   $(game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].domElement.contents).append(this.player);
     // }
     // this.stealItem();
@@ -167,7 +172,7 @@ class GameMaster {
   //   } else if (this.upandDownIndex >= 4 && this.leftandRightIndex != 2) {
   //     this.upandDownIndex--;
   //   } else {
-    this.accessCurrentPosition = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX][this.currentPlayerPosition.smallY][this.currentPlayerPosition.smallX].domElement.contents
+    this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX][this.currentPlayerPosition.smallY][this.currentPlayerPosition.smallX].domElement.contents
   //     this.currentPosition = game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].location
   //     $(game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].domElement.contents).append(this.player);
   //   }
@@ -221,7 +226,7 @@ class GameMaster {
   //   } else if (this.leftandRightIndex <= -1 && this.upandDownIndex != 1) {
   //     this.leftandRightIndex++;
   //   } else {
-    this.accessCurrentPosition = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX][this.currentPlayerPosition.smallY][this.currentPlayerPosition.smallX].domElement.contents
+    this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX][this.currentPlayerPosition.smallY][this.currentPlayerPosition.smallX].domElement.contents
   //     this.currentPosition = game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].location;
   //     $(game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].domElement.contents).append(this.player);
   //   }
@@ -268,7 +273,7 @@ class GameMaster {
   //   } else if (this.leftandRightIndex >= 4 && this.upandDownIndex != 1) {
   //     this.leftandRightIndex--;
   //   } else {
-      this.accessCurrentPosition = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX][this.currentPlayerPosition.smallY][this.currentPlayerPosition.smallX].domElement.contents
+      this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX][this.currentPlayerPosition.smallY][this.currentPlayerPosition.smallX].domElement.contents
   //     this.currentPosition = game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].location;
   //     $(game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].domElement.contents).append(this.player);
   //   }
@@ -295,7 +300,7 @@ class GameMaster {
   checkIfPlayerEntersHouse() {
     if (this.currentPlayerPosition.largeX === 1 && this.currentPlayerPosition.largeY === 1) {
       $("#gameBoard").addClass("hidden");
-      $("#displayContainer").append(this.homeDisplay);
+      $("#buildingContainer").append(this.homeDisplay);
     }
   }
 }
