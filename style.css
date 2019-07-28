@@ -11,13 +11,13 @@ body{
 .backOfTile{
   background-color: yellow;
 }
-#gameContainer{
+.gameContainer{
   width: 100vw;
   height: 100vh;
   background-color: black;
   display: inline-block;
 }
-#gameBoard{
+.gameBoard{
 
   margin:auto;
   margin-top: 5.5vh;
@@ -77,17 +77,22 @@ body{
   background-size: cover;
 }
 
-/* .hidden{
-  /* display: none; */
+.hidden{
+  display: none;
+}
+
+/* .removeMovement{
+
 } */
 
 
-
 /* BUILDING STYLING */
-#buildingContainer{
-  height: 50vmin;
-  width: 50vmin;
+.buildingContainer{
+  height: 100vmin;
+  width: 100vmin;
   background-color:rgba(100,100,100,0.5);
+  /* top: 5vmin;
+  left: 10vmax; */
   position: absolute;
 }
 

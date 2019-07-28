@@ -4,7 +4,7 @@ class FirstTown {
     this.boardArray = [];
     this.squareArray = [];
     this.realArray = [];
-    this.gameBoardDom = $("#gameBoard");
+    this.gameBoardDom = $(".gameBoard");
     this.tileDomObject = null;
     this.row = null;
     this.col = null;
