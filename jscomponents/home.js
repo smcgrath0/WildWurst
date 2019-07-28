@@ -1,10 +1,15 @@
 class HomeDisplay {
-  constructor(boardArray, currentPlayerPosition){
-    this.boardArray = boardArray;
+  constructor(currentPlayerPosition, homePosition){
+    this.options= {
+      height: 10,
+      width: 10
+    }
+    this.boardArray = [];
     this.currentPlayerPosition = currentPlayerPosition;
+    this.house = homePosition;
     console.log(this.boardArray);
     this.hide = this.hide.bind(this);
-    this.shadow = $("#buildingContainers");
+    this.shadow = $(".buildingContainers");
     this.displayDiv = null;
     // this.message = $(message);
     onClose: null;
@@ -12,7 +17,20 @@ class HomeDisplay {
   }
   createHomeDisplay(){
     this.displayDiv = $("<div>").addClass("home");
-    $("#buildingContainer").append(this.displayDiv)
+    $(".buildingContainer").append(this.displayDiv)
+    for (this.row = 0; this.row < this.options.height; this.row++) {
+      this.boardArray[this.row] = [];
+      for (this.col = 0; this.col < this.options.width; this.col++) {
+        var location = {
+          x: this.col, y: this.row
+        }
+        var tile = new Tile(location);
+        this.boardArray[this.row][this.col] = tile;
+        this.tileDomObject = tile.render();
+        this.displayDiv.append(this.tileDomObject);
+      }
+    }
+    $(".square").css({"width":"10%","height":"10%","background-color":"green"});
   }
   show() {
     console.log(this.shadow)
@@ -31,38 +49,9 @@ class HomeDisplay {
   init() {
     this.hide();
     this.shadow.off();
-    $("#modalShadow").on("click", this.hide)
+    // $("#modalShadow").on("click", this.hide)
 
-    $("#modalShadow").on("click", this.onClose)
-
-  }
-}
-
-class Modal {
-  //constructor takes in 3 arguments: the modal shadow dom element, the modal body dom element, and the modal message dom element
-  //Modal will have a property called onClose that will eventually be set to a callback set by the outside
-  constructor(shadow, body, message) {
+    // $("#modalShadow").on("click", this.onClose)
 
   }
-  //takes in no arguments.
-  //returns nothing
-  //shows the given modal shadow and the given modal body
-
-  //takes in no arguments
-  //returns nothing
-  //hides the given modal shadow and the given modal body
-
-  //takes in a string that it then puts inside the text of the modal message element
-  //returns nothing
-
-  //takes in no arguments
-  //returns nothing
-  //hides the modal, removes all existing click handlers from the modal shadow
-  //and adds 2 click handlers to the modal shadow:
-  //one that calls whatever callback was assigned to this object's onClose handler
-  //calls this object's hide method.  Make sure to use bind to make it correctly bind to the object
-  //this.FUNCTIONNAME.bind( this )
-  //otherwise it won't work correctly
-
-
 }

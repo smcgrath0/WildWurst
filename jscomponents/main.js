@@ -11,4 +11,7 @@ $(document).ready(initializeApp);
 function initializeApp(){
 
   var gameMaster = new GameMaster();
+  // $('body').css('zoom', '120%');
+  // $('body').css('zoom', '1.2');
+  // $('body').css('-moz-transform', scale(1.2, 1.2));
 }

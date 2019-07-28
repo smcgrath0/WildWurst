@@ -11,13 +11,13 @@ body{
 .backOfTile{
   background-color: yellow;
 }
-#gameContainer{
+.gameContainer{
   width: 100vw;
   height: 100vh;
   background-color: black;
   display: inline-block;
 }
-#gameBoard{
+.gameBoard{
 
   margin:auto;
   margin-top: 5.5vh;
@@ -30,15 +30,15 @@ body{
 
 }
 .square{
-  width: 20%;
-  height: 20%;
+  width: 4%;
+  height: 4%;
   background-color: red;
   position: relative;
   float: left;
   font-size: 0;
 }
 .squareContainer{
-  /* border: 2px solid red; */
+  border: 1px solid blue;
   opacity:1;
   width: 100%;
   height: 100%;
@@ -49,7 +49,7 @@ body{
 
   width:100%;
   height:100%;
-  border: 1px solid green;
+  /* border: 1px solid green; */
   background-color:violet;
   opacity: 1;
   position:static;
@@ -77,17 +77,22 @@ body{
   background-size: cover;
 }
 
-/* .hidden{
-  /* display: none; */
+.hidden{
+  display: none;
+}
+
+/* .removeMovement{
+
 } */
 
 
-
 /* BUILDING STYLING */
-#buildingContainer{
-  height: 50vmin;
-  width: 50vmin;
+.buildingContainer{
+  height: 100vmin;
+  width: 100vmin;
   background-color:rgba(100,100,100,0.5);
+  /* top: 5vmin;
+  left: 10vmax; */
   position: absolute;
 }
 
