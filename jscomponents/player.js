@@ -5,11 +5,14 @@ class Player {
     this.currentPosition = currentPosition
     this.bigX = this.currentPosition.largeX;
     this.bigY = this.currentPosition.largeY;
-    this.smallX = this.currentPosition.smallX;
-    this.smallY = this.currentPosition.smallY;
     console.log(this.bigX)
     this.currentPlayer = $("<div>").addClass("player");
+
     // $(this.boardArray[this.bigY][this.bigX][this.smallY][this.smallX].domElement.contents).append(this.currentPlayer);
+  }
+
+  updatePlayerVisuals(){
+    this.current
   }
 
 }

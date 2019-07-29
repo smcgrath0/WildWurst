@@ -3,6 +3,7 @@ body{
   height: 100vh;
   width: 100vw;
   display: block;
+  background-color: black;
   /* position: fixed; */
   /* overflow-x: scroll; */
   overflow: hidden;
@@ -11,13 +12,13 @@ body{
 .backOfTile{
   background-color: yellow;
 }
-#gameContainer{
+.gameContainer{
   width: 100vw;
   height: 100vh;
   background-color: black;
   display: inline-block;
 }
-#gameBoard{
+.gameBoard{
 
   margin:auto;
   margin-top: 5.5vh;
@@ -30,68 +31,79 @@ body{
 
 }
 .square{
-  width: 20%;
-  height: 20%;
-  background-color: red;
+
   position: relative;
   float: left;
   font-size: 0;
 }
+
+.firstTownSquares{
+  width: 4%;
+  height: 4%;
+  background-color: red;
+}
+
+.homeSquares{
+   width: 10%;
+   height: 10%;
+   background-color: green;
+}
+
 .squareContainer{
-  /* border: 2px solid red; */
+  border: 1px solid blue;
   opacity:1;
   width: 100%;
   height: 100%;
   position: absolute;
   display:inline-block;
 }
-.pawnContainer{
 
-  width:100%;
-  height:100%;
-  border: 1px solid green;
-  background-color:violet;
-  opacity: 1;
-  position:static;
-}
-.pawn{
-  float: left;
-  width:20%;
-  height:20.0%;
-
-}
-
-.pawn:nth-of-type(2){
-  background-color: red;
+.door{
+  background-color:brown;
 }
 
 
 
 /*PLAYER STYLING*/
 .player{
-  background-color: blue;
-  width: 80%;
-  height:80%;
+  background-image: url("./assets/images/playerImages/NormanWurst-front.png");
+  width: 100%;
+  height:100%;
   z-index: 5;
   margin:5%;
+  background-size: cover;
 }
 
-/* .hidden{
-  /* display: none; */
+.hidden{
+  display: none;
+}
+
+/* .removeMovement{
+
 } */
 
 
-
 /* BUILDING STYLING */
-#buildingContainer{
-  height: 50vmin;
-  width: 50vmin;
+.buildingContainer{
+  height: 100vmin;
+  width: 100vmin;
   background-color:rgba(100,100,100,0.5);
+  /* /* top: 5vmin; */
+  left: 17vmax;
+
   position: absolute;
 }
 
 .home{
-  top:10%;
+  /* top:10%; */
+  left:10%;
+  height: 80%;
+  width:80%;
+  background-color: red;
+  position: relative;
+}
+
+.market{
   left:10%;
   height: 80%;
   width:80%;
