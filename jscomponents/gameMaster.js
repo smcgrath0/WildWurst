@@ -5,10 +5,7 @@ class GameMaster {
     // this.game.boardArray
     console.log(this.game);
     this.game.makeGameBoard();
-    this.homePosition = {
-      x: [4,5,6,7],
-      y: [2,3,4,5],
-    }
+
     //player Position
     this.largeSquareX = 0;
     this.largeSquareY = 0;
@@ -21,17 +18,26 @@ class GameMaster {
     this.yScreenCounter = 0;
 
     //home
-    // this.homeDisplay = new HomeDisplay(this.game.boardArray, this.currentPlayerPosition,this.homePosition);
     this.playerBuildingX = 5;
     this.playerBuildingY = 10;
-    this.buildingCounter = 0;
+    this.homeCounter = 0;
     this.newBuildingContainer =null;
+    this.homePosition = {
+      x: [4, 5, 6, 7],
+      y: [2, 3, 4, 5],
+    }
+
+    //market
+    this.marketCounter = 0;
+    this.marketPosition = {
+      x: [3,17],
+      y: [12,17],
+    }
 
     this.player = new Player(this.game.boardArray, this.currentPlayerPosition);
     this.movementAll = this.movementAll.bind(this);
     window.addEventListener('keydown', this.movementAll);
-    // .addEventListener()
-    // document.addEventListener('scroll', this.consoleScroll);
+
     // this.movementDown = this.movementDown.bind(this);
     this.movementUp = this.movementUp.bind(this);
     this.consoleScroll = this.consoleScroll.bind(this);
@@ -43,18 +49,11 @@ class GameMaster {
     this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
     $(this.accessCurrentContent).append(this.player.currentPlayer);
 
-    // this.buildingChecker = {
-    //   up: $(game.boardArray[this.largeSquareY][this.largeSquareX].domElement.contents).addClass("door zdex"),
-    //   down: $(game.boardArray[this.largeSquareY][this.largeSquareX].domElement.contents).addClass("door zdex"),
-    //   left: $(game.boardArray[this.largeSquareY][this.largeSquareX].domElement.contents).addClass("door zdex"),
-    //   right: $(game.boardArray[this.largeSquareY][this.largeSquareX].domElement.contents).addClass("door zdex")
-    // }
   }
   consoleScroll(event){
     console.log(event)
   }
   movementAll(event) {
-    // if (this.winTheGame === false) {]
     console.log(event)
 
       event.preventDefault();
@@ -93,12 +92,6 @@ class GameMaster {
           $(".player").css("background-image", "url('./assets/images/playerImages/NormanWurst-front.png')");
           break;
       }
-    // // this.checkIfPlayerEntersHouse();
-    // if (this.currentPlayerPosition.largeX === 1 && this.currentPlayerPosition.largeY === 1) {
-    //   $("#gameContainer").addClass("hidden");
-    //   $("#buildingContainer").removeClass("hidden");
-    // }
-    // // }
   }
   movementUp() {
       this.currentPlayerPosition.largeY--;
@@ -137,29 +130,57 @@ class GameMaster {
       if(!$(".gameContainer").hasClass("hidden")){
 
         //checks for home building
-        for (var xindex = 0; xindex < this.homePosition.x.length; xindex++) {
-          if (this.currentPlayerPosition.largeY === this.homePosition.y[this.homePosition.y.length - 1] && this.currentPlayerPosition.largeX === this.homePosition.x[xindex]) {
+          if (this.currentPlayerPosition.largeY <= this.homePosition.y[3] && this.currentPlayerPosition.largeX <= this.homePosition.x[3] && this.currentPlayerPosition.largeY >= this.homePosition.y[0] && this.currentPlayerPosition.largeX >= this.homePosition.x[0]) {
             this.currentPlayerPosition.largeY++;
             //door
             if (this.currentPlayerPosition.largeX === this.homePosition.x[2]) {
               this.checkIfPlayerEntersHouse();
-              if (!this.buildingCounter) {
+              if (!this.homeCounter) {
                 this.homeDisplay = new HomeDisplay(this.currentPlayerPosition, this.homePosition);
-                this.buildingCounter++;
+                this.homeCounter++;
               }
-
+              $(".home").removeClass("hidden");
               this.currentPlayerPosition.largeY = 9;
-              this.currentPlayerPosition.largeX = 4;
+              this.currentPlayerPosition.largeX = 5;
               this.currentPlayerPosition.largeY--;
               this.accessCurrentContent = this.homeDisplay.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents;
-              $(".square:nth-child(96)").css("background-color", "brown");
-              $(".square").css({ "width": "10%", "height": "10%", "background-color": "green" });
+              $(".square:nth-child(96)").addClass("door");
+              $(".square").removeClass("firstTownSquares");
+              $(".square").addClass("homeSquares");
+
+              $("body").css({"zoom": "1.2"})
               return this.currentPlayerPosition.largeX;
             }
 
             this.yScreenCounter -= 25;
             return this.currentPlayerPosition.largeY
           }
+
+        //checks for market building
+        if (this.currentPlayerPosition.largeY <= this.marketPosition.y[1] && this.currentPlayerPosition.largeX <= this.marketPosition.x[1] && this.currentPlayerPosition.largeY >= this.marketPosition.y[0] && this.currentPlayerPosition.largeX >= this.marketPosition.x[0]) {
+          this.currentPlayerPosition.largeY++;
+          //door
+          if (this.currentPlayerPosition.largeX === 10) {
+            this.checkskIfPlayerEntersMarket();
+            if (!this.marketCounter) {
+              this.marketDisplay = new MarketDisplay(this.currentPlayerPosition, this.marketPosition);
+              this.marketCounter++;
+            }
+            $(".market").removeClass("hidden");
+            this.currentPlayerPosition.largeY = 9;
+            this.currentPlayerPosition.largeX = 5;
+            this.currentPlayerPosition.largeY--;
+            this.accessCurrentContent = this.marketDisplay.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents;
+            $(".square:nth-child(96)").addClass("door");
+            $(".square").removeClass("firstTownSquares");
+            $(".square").addClass("marketSquares");
+
+            $("body").css({ "zoom": "1.2" })
+            return this.currentPlayerPosition.largeX;
+          }
+
+          this.yScreenCounter -= 25;
+          return this.currentPlayerPosition.largeY
         }
         // this.yScreenCounter -= 25;
         this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
@@ -230,19 +251,25 @@ class GameMaster {
         return this.currentPlayerPosition.largeY;
       }
       //checks for first building
-      for (var xindex = 0; xindex < this.homePosition.x.length; xindex++) {
-        if (this.currentPlayerPosition.largeY === this.homePosition.y[0] && this.currentPlayerPosition.largeX === this.homePosition.x[xindex]) {
+        if (this.currentPlayerPosition.largeY <= this.homePosition.y[3] && this.currentPlayerPosition.largeX <= this.homePosition.x[3] && this.currentPlayerPosition.largeY >= this.homePosition.y[0] && this.currentPlayerPosition.largeX >= this.homePosition.x[0]) {
           this.currentPlayerPosition.largeY--;
           this.yScreenCounter += 25;
           return this.currentPlayerPosition.largeY
         }
+
+      //checks for market building
+      if (this.currentPlayerPosition.largeY <= this.marketPosition.y[1] && this.currentPlayerPosition.largeX <= this.marketPosition.x[1] && this.currentPlayerPosition.largeY >= this.marketPosition.y[0] && this.currentPlayerPosition.largeX >= this.marketPosition.x[0]) {
+        this.currentPlayerPosition.largeY--;
+        this.yScreenCounter += 25;
+        return this.currentPlayerPosition.largeX
       }
+
       this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
     }
     if (!$(".buildingContainer").hasClass("hidden")) {
 
 
-      //checks for outside
+      //checks for home outside
       for (var xindex = 0; xindex < 10; xindex++){
         if(this.currentPlayerPosition.largeY === 10 && this.currentPlayerPosition.largeX === 5){
           this.checkIfPlayerLeavesHouse();
@@ -252,10 +279,15 @@ class GameMaster {
           this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents;
           this.yScreenCounter += 25;
           this.xScreenCounter +=25;
-          $(".square").css({ "width": "4%", "height": "4%", "background-color": "red" });
+          $(".square:nth-child(96)").removeClass("door")
+          $(".square").removeClass("homeSquares")
+          $(".square").addClass("firstTownSquares");
+          $(".home").addClass("hidden");
+          $("body").css({ "zoom": "3" })
+          return this.accessCurrentContent;
         }
       }
-      //checks for outer walls
+      //checks for home outer walls
       if (this.currentPlayerPosition.largeY >= 10) {
         this.currentPlayerPosition.largeY--;
         this.yScreenCounter += 25;
@@ -321,12 +353,17 @@ class GameMaster {
     if (!$(".gameContainer").hasClass("hidden")) {
 
       //checks for first building
-      for (var yindex = 0; yindex < this.homePosition.y.length; yindex++) {
-        if (this.currentPlayerPosition.largeX === this.homePosition.x[this.homePosition.x.length - 1] && this.currentPlayerPosition.largeY === this.homePosition.y[yindex]) {
-          this.currentPlayerPosition.largeX++;
-          this.xScreenCounter -= 25;
-          return this.currentPlayerPosition.largeX
-        }
+      if (this.currentPlayerPosition.largeY <= this.homePosition.y[3] && this.currentPlayerPosition.largeX <= this.homePosition.x[3] && this.currentPlayerPosition.largeY >= this.homePosition.y[0] && this.currentPlayerPosition.largeX >= this.homePosition.x[0]){
+        this.currentPlayerPosition.largeX++;
+        this.xScreenCounter -= 25;
+        return this.currentPlayerPosition.largeX
+      }
+
+      //checks for market building
+      if (this.currentPlayerPosition.largeY <= this.marketPosition.y[1] && this.currentPlayerPosition.largeX <= this.marketPosition.x[1] && this.currentPlayerPosition.largeY >= this.marketPosition.y[0] && this.currentPlayerPosition.largeX >= this.marketPosition.x[0]) {
+        this.currentPlayerPosition.largeX++;
+        this.xScreenCounter -= 25;
+        return this.currentPlayerPosition.largeX
       }
       this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
     }
@@ -393,12 +430,17 @@ class GameMaster {
       }
 
       //checks for first building
-      for (var yindex = 0; yindex < this.homePosition.y.length; yindex++) {
-        if (this.currentPlayerPosition.largeX === this.homePosition.x[0] && this.currentPlayerPosition.largeY === this.homePosition.y[yindex]) {
-          this.currentPlayerPosition.largeX--;
-          this.xScreenCounter += 25;
-          return this.currentPlayerPosition.largeX
-        }
+      if (this.currentPlayerPosition.largeY <= this.homePosition.y[3] && this.currentPlayerPosition.largeX <= this.homePosition.x[3] && this.currentPlayerPosition.largeY >= this.homePosition.y[0] && this.currentPlayerPosition.largeX >= this.homePosition.x[0]){
+        this.currentPlayerPosition.largeX--;
+        this.xScreenCounter += 25;
+        return this.currentPlayerPosition.largeX
+      }
+
+      //checks for market building
+      if (this.currentPlayerPosition.largeY <= this.marketPosition.y[1] && this.currentPlayerPosition.largeX <= this.marketPosition.x[1] && this.currentPlayerPosition.largeY >= this.marketPosition.y[0] && this.currentPlayerPosition.largeX >= this.marketPosition.x[0]) {
+        this.currentPlayerPosition.largeX--;
+        this.xScreenCounter += 25;
+        return this.currentPlayerPosition.largeX
       }
 
       this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
@@ -451,5 +493,15 @@ class GameMaster {
 
     $(".gameContainer").removeClass("hidden").append(this.game)
     $(".gameContainer").append(this.newBuildingContainer);
+  }
+  checksIfPlayerEntersMarket(){
+    $(".gameContainer").addClass("hidden");
+    $(".buildingContainer").removeClass("hidden").append(this.marketDisplay);
+  }
+  checksIfPlayerLeavesMarket(){
+    $(".buildingContainer").addClass("hidden");
+
+    $(".gameContainer").removeClass("hidden").append(this.game)
+    // $(".gameContainer").append(this.newBuildingContainer);
   }
   }

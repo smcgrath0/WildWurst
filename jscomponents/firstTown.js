@@ -30,6 +30,11 @@ class FirstTown {
       }
     }
     $(".gameBoard .square:nth-child(132) .backOfTile").css("background-color","brown")
+    for (var i = 304; i < 445; i += 25) {
+      for (var j = 0; j < 15; j += 1) {
+        $(".square:nth-child(" + (i + j) + ") .squareContainer").addClass("backOfTile");
+      }
+    }
   }
 }
 class Tile {
@@ -41,7 +46,7 @@ class Tile {
     };
   }
   render() {
-    this.domElement.container = $("<div>").addClass('square');
+    this.domElement.container = $("<div>").addClass('square firstTownSquares');
     this.domElement.contents = $("<div>").addClass('squareContainer');
     this.domElement.container.append(this.domElement.contents);
     return this.domElement.container;
