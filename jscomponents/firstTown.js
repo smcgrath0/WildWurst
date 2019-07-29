@@ -29,7 +29,7 @@ class FirstTown {
         $(".square:nth-child(" + (i+j) + ") .squareContainer").addClass("backOfTile");
       }
     }
-
+    $(".gameBoard .square:nth-child(132) .backOfTile").css("background-color","brown")
   }
 }
 class Tile {

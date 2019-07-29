@@ -30,7 +30,8 @@ class HomeDisplay {
         this.displayDiv.append(this.tileDomObject);
       }
     }
-    $(".square").css({"width":"10%","height":"10%","background-color":"green"});
+
+
   }
   show() {
     console.log(this.shadow)
