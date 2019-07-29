@@ -1,12 +1,12 @@
-class HomeDisplay {
-  constructor(currentPlayerPosition, homePosition){
-    this.options= {
-      height: 10,
-      width: 10
+class MarketDisplay {
+  constructor(currentPlayerPosition, marketPosition) {
+    this.options = {
+      height: 6,
+      width: 14
     }
     this.boardArray = [];
     this.currentPlayerPosition = currentPlayerPosition;
-    this.house = homePosition;
+    this.MarketDisplay = marketPosition;
     console.log(this.boardArray);
     this.hide = this.hide.bind(this);
     this.shadow = $(".buildingContainers");
@@ -15,8 +15,8 @@ class HomeDisplay {
     onClose: null;
     this.createHomeDisplay();
   }
-  createHomeDisplay(){
-    this.displayDiv = $("<div>").addClass("home");
+  createHomeDisplay() {
+    this.displayDiv = $("<div>").addClass("market");
     $(".buildingContainer").append(this.displayDiv)
     for (this.row = 0; this.row < this.options.height; this.row++) {
       this.boardArray[this.row] = [];
