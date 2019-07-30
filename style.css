@@ -26,10 +26,9 @@ body{
   width: 90vh;
   height: 90vh;
   background-color: lightblue;
-
   position: absolute;
-
 }
+
 .square{
 
   position: relative;
@@ -47,6 +46,12 @@ body{
    width: 10%;
    height: 10%;
    background-color: green;
+}
+
+.marketSquares{
+  width: 6.66%;
+  height: 6.66%;
+  background-color: peru;
 }
 
 .squareContainer{
@@ -104,9 +109,9 @@ body{
 }
 
 .market{
-  left:10%;
-  height: 80%;
-  width:80%;
-  background-color: red;
+  /* left:10%; */
+  height: 100%;
+  width:100%;
+  /* background-color: red; */
   position: relative;
 }

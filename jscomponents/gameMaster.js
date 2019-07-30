@@ -38,13 +38,10 @@ class GameMaster {
     this.movementAll = this.movementAll.bind(this);
     window.addEventListener('keydown', this.movementAll);
 
-    // this.movementDown = this.movementDown.bind(this);
-    this.movementUp = this.movementUp.bind(this);
     this.consoleScroll = this.consoleScroll.bind(this);
     this.checkIfPlayerEntersHouse = this.checkIfPlayerEntersHouse.bind(this);
     this.checkIfPlayerLeavesHouse = this.checkIfPlayerLeavesHouse.bind(this);
-    // this.movementLeft = this.movementLeft.bind(this);
-    // this.movementRight = this.movementRight.bind(this);
+
     // this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX][this.currentPlayerPosition.smallY][this.currentPlayerPosition.smallX].domElement.contents
     this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
     $(this.accessCurrentContent).append(this.player.currentPlayer);
@@ -102,31 +99,6 @@ class GameMaster {
         this.yScreenCounter -= 25;
         return this.currentPlayerPosition.largeY;
       }
-
-
-
-
-
-    // }
-    // this.upandDownIndex--;
-    // if (this.upandDownIndex <= -1 && this.leftandRightIndex == 2) {
-    //   this.largeSquareY--;
-    //   if (this.largeSquareY <= -1) {
-    //     this.largeSquareY = 0;
-    //     ++this.upandDownIndex
-    //     return this.largeSquareY;
-    //   }
-    //   this.upandDownIndex = 3;
-    //   this.leftandRightIndex = 2;
-    //   this.currentPosition = game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].location;
-    //   $(game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].domElement.contents).append(this.player);
-
-    //   this.gameBoard = $(this.doorChecker.up).closest("#gameBoard").find(".square:nth-child(2) .pawn:nth-child(16) .pawnContainer");
-    //   $(game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].domElement.contents).addClass("door")
-    //   $(game.boardArray[this.largeSquareY][this.largeSquareX].domElement.contents).removeClass('backOfTile');
-    // } else if (this.upandDownIndex <= -1 && this.leftandRightIndex != 2) {
-    //   this.upandDownIndex++
-    // } else {
       if(!$(".gameContainer").hasClass("hidden")){
 
         //checks for home building
@@ -161,21 +133,21 @@ class GameMaster {
           this.currentPlayerPosition.largeY++;
           //door
           if (this.currentPlayerPosition.largeX === 10) {
-            this.checkskIfPlayerEntersMarket();
+            this.checksIfPlayerEntersMarket();
             if (!this.marketCounter) {
               this.marketDisplay = new MarketDisplay(this.currentPlayerPosition, this.marketPosition);
               this.marketCounter++;
             }
             $(".market").removeClass("hidden");
-            this.currentPlayerPosition.largeY = 9;
-            this.currentPlayerPosition.largeX = 5;
+            this.currentPlayerPosition.largeY = 10;
+            this.currentPlayerPosition.largeX = 7;
             this.currentPlayerPosition.largeY--;
             this.accessCurrentContent = this.marketDisplay.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents;
-            $(".square:nth-child(96)").addClass("door");
+
             $(".square").removeClass("firstTownSquares");
             $(".square").addClass("marketSquares");
-
-            $("body").css({ "zoom": "1.2" })
+            $(".buildingContainer").css({"width": "100vmax", "height": "100vmax"})
+            $("body").css({ "zoom": "0.5" })
             return this.currentPlayerPosition.largeX;
           }
 
@@ -186,62 +158,28 @@ class GameMaster {
         this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
 
       }
-      if(!$(".buildingContainer").hasClass("hidden")){
+      if(!$(".buildingContainer").hasClass("hidden") && !$(".home").hasClass("hidden")){
+        if (!$(".market").hasClass("hidden") && $(".buildingContainer > div").hasClass("market")) {
+          this.accessCurrentContent = this.marketDisplay.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
+          return this.currentPlayerPosition
+        }
         this.accessCurrentContent = this.homeDisplay.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
+        return this.currentPlayerPosition
       }
-    // this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX][this.currentPlayerPosition.smallY][this.currentPlayerPosition.smallX].domElement.contents
-    //   $(game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].domElement.contents).append(this.player);
-    // }
-    // this.stealItem();
-    // if (this.currentPosition == game.boardArray[this.randomItemBigIndexY][this.randomItemBigIndexX][this.randomItemLittleIndexY][this.randomItemLittleIndexX].location) {
-    //   this.stolenItem1 = true;
-    //   console.log("the stolen item1 was picked up", this.stolenItem1);
-    //   this.retrieveItem1.addClass("retrieveItem");
-    //   $(".item").removeClass("redItem1");
-    // }
-    // if (this.currentPosition == game.boardArray[this.randomItemBigIndexX][this.randomItemBigIndexY][this.randomItemLittleIndexX][this.randomItemLittleIndexY].location) {
-    //   this.stolenItem2 = true;
-    //   console.log("the stolen item2 was picked up", this.stolenItem2);
-    //   this.retrieveItem2.addClass("retrieveItem");
-    //   $(".item").removeClass("redItem2");
-    // }
-    // if (this.currentPosition === game.boardArray[this.randomExitY][this.randomExitX][this.randomExity][this.randomExitx].location && $("#timer").text() > 1 && this.stolenItem1 == true && this.stolenItem2 == true) {
-    //   this.winTheGame = true;
-    //   $(".youWin").removeClass('hidden');
 
-    // }
+      if(!$(".buildingContainer").hasClass("hidden") && !$(".market").hasClass("hidden")){
+        if (!$(".home").hasClass("hidden")) {
+          this.accessCurrentContent = this.homeDisplay.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
+          return this.currentPlayerPosition
+        }
+        this.accessCurrentContent = this.marketDisplay.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
+        return this.currentPlayerPosition
+      }
     return this.currentPlayerPosition;
   }
   movementDown() {
-      this.currentPlayerPosition.largeY++;
+    this.currentPlayerPosition.largeY++;
 
-    // //checks for outer walls
-    // if (this.currentPlayerPosition.largeY >= 25) {
-    //   this.currentPlayerPosition.largeY = 24;
-    //   this.yScreenCounter += 25;
-    //   return this.currentPlayerPosition.largeY;
-    // }
-
-
-    // }
-  //   if (this.upandDownIndex >= 4 && this.leftandRightIndex == 2) {
-  //     this.largeSquareY++;
-  //     if (this.largeSquareY >= 3) {
-  //       this.largeSquareY = 2;
-  //       --this.upandDownIndex
-  //       return this.largeSquareY;
-  //     }
-  //     this.upandDownIndex = 0;
-  //     this.leftandRightIndex = 2;
-  //     this.currentPosition = game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].location;
-  //     $(game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].domElement.contents).append(this.player);
-
-  //     this.gameBoard = $(this.doorChecker.down).closest("#gameBoard").find(".square:nth-child(8) .pawn:nth-child(4) .pawnContainer");
-  //     $(game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].domElement.contents).addClass("door")
-  //     $(game.boardArray[this.largeSquareY][this.largeSquareX].domElement.contents).removeClass('backOfTile');
-  //   } else if (this.upandDownIndex >= 4 && this.leftandRightIndex != 2) {
-  //     this.upandDownIndex--;
-  //   } else {
     if (!$(".gameContainer").hasClass("hidden")) {
 
       //checks for outer walls
@@ -266,7 +204,11 @@ class GameMaster {
 
       this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
     }
-    if (!$(".buildingContainer").hasClass("hidden")) {
+    if (!$(".buildingContainer").hasClass("hidden") && !$(".home").hasClass("hidden")) {
+      if (!$(".market").hasClass("hidden") && $(".buildingContainer > div").hasClass("market")) {
+        this.accessCurrentContent = this.marketDisplay.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
+        return this.currentPlayerPosition
+      }
 
 
       //checks for home outside
@@ -296,60 +238,51 @@ class GameMaster {
       this.accessCurrentContent = this.homeDisplay.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
 
     }
-  // this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX][this.currentPlayerPosition.smallY][this.currentPlayerPosition.smallX].domElement.contents
-  //     this.currentPosition = game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].location
-  //     $(game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].domElement.contents).append(this.player);
-  //   }
-  //   // this.stealItem();
-  //   if (this.currentPosition == game.boardArray[this.randomItemBigIndexY][this.randomItemBigIndexX][this.randomItemLittleIndexY][this.randomItemLittleIndexX].location) {
-  //     this.stolenItem1 = true;
-  //     console.log("the stolen item1 was picked up", this.stolenItem1);
-  //     this.retrieveItem1.addClass("retrieveItem");
-  //     $(".item").removeClass("redItem1");
-  //   }
-  //   if (this.currentPosition == game.boardArray[this.randomItemBigIndexX][this.randomItemBigIndexY][this.randomItemLittleIndexX][this.randomItemLittleIndexY].location) {
-  //     this.stolenItem2 = true;
-  //     console.log("the stolen item2 was picked up", this.stolenItem2);
-  //     this.retrieveItem2.addClass("retrieveItem");
-  //     $(".item").removeClass("redItem2");
-  //   }
-  //   if (this.currentPosition === game.boardArray[this.randomExitY][this.randomExitX][this.randomExity][this.randomExitx].location && $("#timer").text() > 1 && this.stolenItem1 == true && this.stolenItem2 == true) {
-  //     this.winTheGame = true;
-  //     $(".youWin").removeClass('hidden');
+    if (!$(".buildingContainer").hasClass("hidden") && !$(".market").hasClass("hidden")) {
+      if (!$(".home").hasClass("hidden")) {
+        this.accessCurrentContent = this.homeDisplay.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
+        return this.currentPlayerPosition
+      }
 
-  //   }
-    return this.currentPlayerPosition;
-  }
-  movementLeft() {
-      this.currentPlayerPosition.largeX--;
+      //checks for market outer walls
+      if (this.currentPlayerPosition.largeY === 15 && this.currentPlayerPosition.largeX === 7) {
+        this.checkIfPlayerLeavesHouse();
+        // this.buildingCounter--;
+        this.currentPlayerPosition.largeX = 20;
+        this.currentPlayerPosition.largeY = 20;
+        this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents;
+        this.yScreenCounter += 25;
+        this.xScreenCounter += 25;
+        $(".square:nth-child(96)").removeClass("door")
+        $(".square").removeClass("homeSquares")
+        $(".square").addClass("firstTownSquares");
+        $(".home").addClass("hidden");
+        $("body").css({ "zoom": "3" })
+        return this.accessCurrentContent;
+      }
 
       //checks for outer walls
-      if (this.currentPlayerPosition.largeX < 0) {
-        this.currentPlayerPosition.largeX = 0;
-        this.xScreenCounter -= 25;
+      if (this.currentPlayerPosition.largeX >= 15) {
+        this.currentPlayerPosition.largeX--;
+        this.xScreenCounter += 25;
         return this.currentPlayerPosition.largeX;
       }
 
+      this.accessCurrentContent = this.marketDisplay.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
+      return this.currentPlayerPosition
+    }
+    return this.currentPlayerPosition;
+  }
+  movementLeft() {
+    this.currentPlayerPosition.largeX--;
 
-    // }
-  //   if (this.leftandRightIndex <= -1 && this.upandDownIndex == 1) {
-  //     this.largeSquareX--;
-  //     if (this.largeSquareX <= -1) {
-  //       this.largeSquareX = 0;
-  //       ++this.leftandRightIndex
-  //       return this.largeSquareY;
-  //     };
-  //     this.upandDownIndex = 1;
-  //     this.leftandRightIndex = 3;
-  //     this.currentPosition = game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].location;
-  //     $(game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].domElement.contents).append(this.player);
+    //checks for outer walls
+    if (this.currentPlayerPosition.largeX < 0) {
+      this.currentPlayerPosition.largeX = 0;
+      this.xScreenCounter -= 25;
+      return this.currentPlayerPosition.largeX;
+    }
 
-  //     this.gameBoard = $(this.doorChecker.left).closest("#gameBoard").find(".square:nth-child(4) .pawn:nth-child(9) .pawnContainer");
-  //     $(game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].domElement.contents).addClass("door");
-  //     $(game.boardArray[this.largeSquareY][this.largeSquareX].domElement.contents).removeClass('backOfTile');
-  //   } else if (this.leftandRightIndex <= -1 && this.upandDownIndex != 1) {
-  //     this.leftandRightIndex++;
-  //   } else {
     if (!$(".gameContainer").hasClass("hidden")) {
 
       //checks for first building
@@ -367,60 +300,29 @@ class GameMaster {
       }
       this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
     }
-    if (!$(".buildingContainer").hasClass("hidden")) {
+    if (!$(".buildingContainer").hasClass("hidden") && !$(".home").hasClass("hidden")) {
+      if (!$(".market").hasClass("hidden") && $(".buildingContainer > div").hasClass("market")) {
+        this.accessCurrentContent = this.marketDisplay.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
+        return this.currentPlayerPosition
+      }
       this.accessCurrentContent = this.homeDisplay.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
+      return this.currentPlayerPosition
     }
-    // this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
-    // this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX][this.currentPlayerPosition.smallY][this.currentPlayerPosition.smallX].domElement.contents
-  //     this.currentPosition = game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].location;
-  //     $(game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].domElement.contents).append(this.player);
-  //   }
-  //   // this.stealItem();
-  //   if (this.currentPosition == game.boardArray[this.randomItemBigIndexY][this.randomItemBigIndexX][this.randomItemLittleIndexY][this.randomItemLittleIndexX].location) {
-  //     this.stolenItem1 = true;
-  //     console.log("the stolen1 item was picked up", this.stolenItem1);
-  //     this.retrieveItem1.addClass("retrieveItem");
-  //     $(".item").removeClass("redItem1");
-  //   }
-  //   if (this.currentPosition == game.boardArray[this.randomItemBigIndexX][this.randomItemBigIndexY][this.randomItemLittleIndexX][this.randomItemLittleIndexY].location) {
-  //     this.stolenItem2 = true;
-  //     console.log("the stolen item2 was picked up", this.stolenItem2);
-  //     this.retrieveItem2.addClass("retrieveItem");
-  //     $(".item").removeClass("redItem2");
-  //   }
-  //   if (this.currentPosition === game.boardArray[this.randomExitY][this.randomExitX][this.randomExity][this.randomExitx].location && $("#timer").text() > 1 && this.stolenItem1 == true && this.stolenItem2 == true) {
-  //     this.winTheGame = true;
-  //     $(".youWin").removeClass('hidden');
 
-  //   }
+    if (!$(".buildingContainer").hasClass("hidden") && !$(".market").hasClass("hidden")) {
+      if (!$(".home").hasClass("hidden")) {
+        this.accessCurrentContent = this.homeDisplay.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
+        return this.currentPlayerPosition
+      }
+      this.accessCurrentContent = this.marketDisplay.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
+      return this.currentPlayerPosition
+    }
     return this.currentPlayerPosition
   }
   movementRight() {
 
-      this.currentPlayerPosition.largeX++;
+    this.currentPlayerPosition.largeX++;
 
-    // //checks for outer walls
-    // if (this.currentPlayerPosition.largeX >= 25) {
-    //   this.currentPlayerPosition.largeX--;
-    //   this.xScreenCounter += 25;
-    //   return this.currentPlayerPosition.largeX;
-    // }
-
-
-
-
-
-  //     this.upandDownIndex = 1;
-  //     this.currentPlayerPosition.smallX = 0;
-  //     this.currentPosition = game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].location;
-  //     $(game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].domElement.contents).append(this.player);
-
-  //     this.gameBoard = $(this.doorChecker.right).closest("#gameBoard").find(".square:nth-child(6) .pawn:nth-child(6) .pawnContainer");
-  //     $(game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].domElement.contents).addClass("door");
-  //     $(game.boardArray[this.largeSquareY][this.largeSquareX].domElement.contents).removeClass('backOfTile');
-  //   } else if (this.leftandRightIndex >= 4 && this.upandDownIndex != 1) {
-  //     this.leftandRightIndex--;
-  //   } else {
     if (!$(".gameContainer").hasClass("hidden")) {
       //checks for outer walls
       if (this.currentPlayerPosition.largeX >= 25) {
@@ -445,8 +347,11 @@ class GameMaster {
 
       this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
     }
-    if (!$(".buildingContainer").hasClass("hidden")) {
-
+    if (!$(".buildingContainer").hasClass("hidden") && !$(".home").hasClass("hidden")) {
+      if (!$(".market").hasClass("hidden") && $(".buildingContainer > div").hasClass("market")) {
+        this.accessCurrentContent = this.marketDisplay.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
+        return this.currentPlayerPosition
+      }
       //checks for outer walls
       if (this.currentPlayerPosition.largeX >= 10) {
         this.currentPlayerPosition.largeX--;
@@ -455,42 +360,33 @@ class GameMaster {
       }
 
       this.accessCurrentContent = this.homeDisplay.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
+      return this.currentPlayerPosition
     }
-    // this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
-      // this.accessCurrentContent = this.game.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX][this.currentPlayerPosition.smallY][this.currentPlayerPosition.smallX].domElement.contents
-  //     this.currentPosition = game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].location;
-  //     $(game.boardArray[this.largeSquareY][this.largeSquareX][this.upandDownIndex][this.leftandRightIndex].domElement.contents).append(this.player);
-  //   }
-  //   // this.stealItem();
-  //   if (this.currentPosition == game.boardArray[this.randomItemBigIndexY][this.randomItemBigIndexX][this.randomItemLittleIndexY][this.randomItemLittleIndexX].location) {
-  //     this.stolenItem1 = true;
-  //     console.log("the stolen1 item was picked up", this.stolenItem1);
-  //     this.retrieveItem1.addClass("retrieveItem");
-  //     $(".item").removeClass("redItem1");
-  //   }
-  //   if (this.currentPosition == game.boardArray[this.randomItemBigIndexX][this.randomItemBigIndexY][this.randomItemLittleIndexX][this.randomItemLittleIndexY].location) {
-  //     this.stolenItem2 = true;
-  //     console.log("the stolen item2 was picked up", this.stolenItem2);
-  //     this.retrieveItem2.addClass("retrieveItem");
-  //     $(".item").removeClass("redItem2");
-  //   }
-  //   if (this.currentPosition === game.boardArray[this.randomExitY][this.randomExitX][this.randomExity][this.randomExitx].location && $("#timer").text() > 1 && this.stolenItem1 == true && this.stolenItem2 == true) {
-  //     this.winTheGame = true;
-  //     $(".youWin").removeClass('hidden');
 
-  //   }
+    if (!$(".buildingContainer").hasClass("hidden") && !$(".market").hasClass("hidden")) {
+      if (!$(".home").hasClass("hidden")) {
+        this.accessCurrentContent = this.homeDisplay.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
+        return this.currentPlayerPosition
+      }
+      //checks for outer walls
+      if (this.currentPlayerPosition.largeX >= 15) {
+        this.currentPlayerPosition.largeX--;
+        this.xScreenCounter += 25;
+        return this.currentPlayerPosition.largeX;
+      }
+      this.accessCurrentContent = this.marketDisplay.boardArray[this.currentPlayerPosition.largeY][this.currentPlayerPosition.largeX].domElement.contents
+      return this.currentPlayerPosition
+    }
     return this.currentPlayerPosition;
   }
   checkIfPlayerEntersHouse() {
       $(".gameContainer").addClass("hidden");
-
       $(".buildingContainer").removeClass("hidden").append(this.homeDisplay);
     }
   checkIfPlayerLeavesHouse(){
     // $(".buildingContainer").remove();
     // this.newBuildingContainer = $("<div>").addClass(".buildingContainer .hidden")
     $(".buildingContainer").addClass("hidden");
-
     $(".gameContainer").removeClass("hidden").append(this.game)
     $(".gameContainer").append(this.newBuildingContainer);
   }
@@ -500,7 +396,6 @@ class GameMaster {
   }
   checksIfPlayerLeavesMarket(){
     $(".buildingContainer").addClass("hidden");
-
     $(".gameContainer").removeClass("hidden").append(this.game)
     // $(".gameContainer").append(this.newBuildingContainer);
   }
