@@ -1,8 +1,8 @@
 class MarketDisplay {
   constructor(currentPlayerPosition, marketPosition) {
     this.options = {
-      height: 6,
-      width: 14
+      height: 10,
+      width: 15
     }
     this.boardArray = [];
     this.currentPlayerPosition = currentPlayerPosition;

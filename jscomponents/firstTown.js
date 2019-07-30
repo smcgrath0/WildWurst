@@ -35,6 +35,7 @@ class FirstTown {
         $(".square:nth-child(" + (i + j) + ") .squareContainer").addClass("backOfTile");
       }
     }
+    $(".gameBoard .square:nth-child(436) .backOfTile").addClass("door");
   }
 }
 class Tile {
