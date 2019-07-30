@@ -13,9 +13,9 @@ class MarketDisplay {
     this.displayDiv = null;
     // this.message = $(message);
     onClose: null;
-    this.createHomeDisplay();
+    this.createMarketDisplay();
   }
-  createHomeDisplay() {
+  createMarketDisplay() {
     this.displayDiv = $("<div>").addClass("market");
     $(".buildingContainer").append(this.displayDiv)
     for (this.row = 0; this.row < this.options.height; this.row++) {
