@@ -30,11 +30,9 @@ class FirstTown {
       }
     }
     $(".gameBoard .square:nth-child(132) .backOfTile").css("background-color","brown")
-    for (var i = 304; i < 445; i += 25) {
-      for (var j = 0; j < 15; j += 1) {
-        $(".square:nth-child(" + (i + j) + ") .squareContainer").addClass("backOfTile");
-      }
-    }
+
+    $(".square:nth-child(304) .squareContainer").attr("id","generalStore")
+
     $(".gameBoard .square:nth-child(436) .backOfTile").addClass("door");
   }
 }

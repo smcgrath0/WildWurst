@@ -115,3 +115,12 @@ body{
   /* background-color: red; */
   position: relative;
 }
+
+#generalStore {
+  background-image: url("./assets/images/structureImages/hd-bellows-outer.gif");
+  background-size: contain;
+  width: 1500%;
+  height: 600%;
+  z-index: 20;
+  background-repeat: no-repeat;
+}
